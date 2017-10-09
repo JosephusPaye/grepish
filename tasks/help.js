@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const { name, version, description } = require('../package.json');
+const { name, version } = require('../package.json');
 
 function help() {
     const header = `${name} ${version}: https://github.com/JosephusPaye/grepish\n`;
