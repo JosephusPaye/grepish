@@ -1,6 +1,6 @@
 # grepish
 
-A utility like [grep](https://en.wikipedia.org/wiki/Grep), with a focus on ease of use. Useful for working with text on the command line.
+A text-search utility like [grep](https://en.wikipedia.org/wiki/Grep), with a focus on ease of use. Useful for working with text on the command line.
 
 ## Installation
 

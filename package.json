@@ -1,7 +1,7 @@
 {
   "name": "grepish",
   "version": "0.1.0",
-  "description": "A utility like grep, with a focus on ease of use.",
+  "description": "A text-search utility like grep, with a focus on ease of use.",
   "bin": "./bin.js",
   "author": {
     "name": "Josephus Paye II"
