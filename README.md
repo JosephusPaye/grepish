@@ -1,14 +1,14 @@
-## grepish
+# grepish
 
 A utility like [grep](https://en.wikipedia.org/wiki/Grep), with a focus on ease of use. Useful for working with text on the command line.
 
-### Installation
+## Installation
 
 ```
 npm install -g grepish
 ```
 
-### Usage
+## Usage
 
 ```
 Usage:
@@ -31,10 +31,6 @@ Patterns:
     -r <p>, --regexp <p>        Use <p> as a JavaScript regular expression to match lines. Do not include delimiters or flags.
 ```
 
-### License
+## License
 
 [MIT](LICENSE)
-
-### TODO
-
-Tests
