@@ -1,0 +1,16 @@
+{
+  "name": "grepish",
+  "version": "0.1.0",
+  "description": "Like grep, but kinda different.",
+  "bin": "./bin.js",
+  "author": {
+    "name": "Josephus Paye II"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "escape-string-regexp": "^1.0.5",
+    "get-stdin": "^5.0.1",
+    "minimist": "^1.2.0"
+  },
+}
