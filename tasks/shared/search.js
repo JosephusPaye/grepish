@@ -1,40 +1,73 @@
 const EOL = require('os').EOL;
 const chalk = require('chalk');
 const escapeStringRegex = require('escape-string-regexp');
+const trimRegex = new RegExp(`^(?:\r?\n?)+|(?:\r?\n?)+$`, 'g');
 
-function filterResults(input, args) {
-    const { delimiter, exclude } = args;
+function filter(input, args) {
+    const { delimiter = EOL, exclude } = args;
 
     const lines = input.split(delimiter);
     const regex = createRegex(args);
 
-    return lines.filter(line => {
-        const lineMatches = regex.test(line);
-        return exclude ? !lineMatches : lineMatches;
-    });
+    const results = lines
+        .filter(line => {
+            const lineMatches = regex.test(line);
+            return exclude ? !lineMatches : lineMatches;
+        })
+        .map(trimLineBreaks);
+
+    if (!exclude) {
+        return results.map(result => {
+            return result.replace(regex, (match, ...rest) => {
+                // Remove the last two arguments: offset and string
+                // See https://goo.gl/IETseS (MDN)
+                const groups = rest.slice(0, rest.length - 2);
+
+                let output = match;
+
+                groups.forEach(group => {
+                    output = output.replace(group, chalk.green(group));
+                });
+
+                return output;
+            });
+        });
+    }
+
+    return results;
 }
 
-function highlightResults(input, args) {
-    const { delimiter, exclude } = args;
+function highlight(input, args) {
+    const { delimiter = EOL, exclude } = args;
 
     const lines = input.split(delimiter);
     const regex = createRegex(args, 'g');
 
     return lines.map(line => {
-        return line.trim().replace(regex, (match, ...rest) => {
-            // Remove the last two arguments: offset and string
-            // See https://goo.gl/IETseS (MDN)
-            const groups = rest.slice(0, rest.length - 2);
+        if (regex.test(line)) {
+            line = chalk.reset.inverse(line);
 
-            let output = chalk.reset.inverse(line);
+            return trimLineBreaks(line).replace(regex, (match, ...rest) => {
+                // Remove the last two arguments: offset and string
+                // See https://goo.gl/IETseS (MDN)
+                const groups = rest.slice(0, rest.length - 2);
 
-            groups.forEach(group => {
-                output = output.replace(group, chalk.green(group));
+                let output = match;
+
+                groups.forEach(group => {
+                    output = output.replace(group, chalk.green(group));
+                });
+
+                return output;
             });
+        }
 
-            return output;
-        });
+        return trimLineBreaks(line);
     });
+}
+
+function trimLineBreaks(value) {
+    return value.replace(trimRegex, '');
 }
 
 function createRegex(args, flags = '') {
@@ -68,7 +101,8 @@ function createRegexString(starts, contains, ends) {
 }
 
 module.exports = {
-    filterResults,
-    highlightResults,
-    createRegex
+    filter,
+    highlight,
+    createRegex,
+    createRegexString
 };

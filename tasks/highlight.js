@@ -1,10 +1,15 @@
 #!/usr/bin/env
 const EOL = require('os').EOL;
-const { highlightResults } = require('./shared/search');
+const { highlight: highlightResults } = require('./shared/search');
 
-function highlight({ input, args }) {
+function highlight({ input, args }, options = { isCLI: true }) {
     const results = highlightResults(input, args);
-    console.log(results.join(EOL));
+
+    if (options.isCLI) {
+        console.log(results.join(EOL));
+    }
+
+    return results;
 }
 
 module.exports = highlight;

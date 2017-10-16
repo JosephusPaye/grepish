@@ -1,10 +1,15 @@
 #!/usr/bin/env
 const EOL = require('os').EOL;
-const { filterResults } = require('./shared/search');
+const { filter: filterResults } = require('./shared/search');
 
-function filter({ input, args }) {
+function filter({ input, args }, options = { isCLI: true }) {
     const results = filterResults(input, args);
-    console.log(results.join(EOL));
+
+    if (options.isCLI) {
+        console.log(results.join(EOL));
+    }
+
+    return results;
 }
 
 module.exports = filter;

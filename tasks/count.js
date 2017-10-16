@@ -1,8 +1,13 @@
-const { filterResults } = require('./shared/search');
+const { filter: filterResults } = require('./shared/search');
 
-function count({ input, args }) {
+function count({ input, args }, options = { isCLI: true }) {
     const results = filterResults(input, args);
-    console.log(results.length);
+
+    if (options.isCLI) {
+        console.log(results.length);
+    }
+
+    return results.length;
 }
 
 module.exports = count;
